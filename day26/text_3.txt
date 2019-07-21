@@ -1,0 +1,26 @@
+1、交叉连接（笛卡儿积）：两张表的全部
+	标准写法（不写on或where）：
+		隐式写法：select * from A,B;
+		显示写法：select * from A coress join B;
+
+	内连接实现交叉连接（不写on或where）：
+		select * from A join B;
+		select * from A inner join B;
+
+2、内连接，两张表的公有部分
+	形式一（没有join，连接条件只能是where）：		select * from A,B where A.key=B.key;
+	形式一（有join，on或where都可作为连接条件）：		select * from A join B on A.key=B.key;             或    select * from A join B where A.key=B.key;
+	形式一（有inner join，on或where都可作为连接条件）：	select * from A inner join B on A.key=B.key;    或    select * from A inner join B where A.key=B.key;
+
+总结：A,B；A join B；A cross join B；A inner join B；都可以实现内连接和交叉连接，如果不写on或者where，则结果为交叉连接，否则结果为内连接。写on还是写where由是否有join字眼决定，有join既可写on也可写where，没有join只能写where。
+
+3、左（外）连接、右（外）连接、全（外）连接
+	左（外）连接：			left (outer) join
+	右（外）连接：			right (outer) join
+	全（外）连接（MySQL不支持）：	full (outer) join
+
+	MySQL用union实现全外连接： select * from A left join B on A.key = B.key
+				union
+				select * from A right join B on A.key = B.key
+
+总结：内连接的连接条件可以是on语句或者where语句，但外连接的连接条件只能是on语句
